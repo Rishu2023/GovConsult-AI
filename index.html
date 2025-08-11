@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GovConsult AI: Regulatory Compliance Checker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --color-primary-hue: 221;
+      --color-primary-saturation: 83%;
+      --color-primary-lightness: 53%;
+      
+      --color-primary: hsl(var(--color-primary-hue), var(--color-primary-saturation), var(--color-primary-lightness));
+      --color-primary-foreground: hsl(var(--color-primary-hue), var(--color-primary-saturation), 98%);
+      
+      /* Light Theme Colors */
+      --background-light: 210 40% 98%;
+      --foreground-light: 222 84% 5%;
+      --card-light: 210 40% 100%;
+      --card-foreground-light: 222 84% 5%;
+      --popover-light: 210 40% 100%;
+      --popover-foreground-light: 222 84% 5%;
+      --primary-light: var(--color-primary);
+      --primary-foreground-light: var(--color-primary-foreground);
+      --secondary-light: 210 40% 96%;
+      --secondary-foreground-light: 222 47% 11%;
+      --muted-light: 210 40% 96%;
+      --muted-foreground-light: 216 12% 47%;
+      --accent-light: 210 40% 96%;
+      --accent-foreground-light: 222 47% 11%;
+      --destructive-light: 0 84% 60%;
+      --destructive-foreground-light: 210 40% 98%;
+      --border-light: 214 32% 91%;
+      --input-light: 210 40% 100%; /* Changed for better contrast */
+      --ring-light: var(--color-primary);
+
+      /* Dark Theme Colors */
+      --background-dark: 222 84% 4.9%;
+      --foreground-dark: 210 40% 98%;
+      --card-dark: 222 84% 6%;
+      --card-foreground-dark: 210 40% 98%;
+      --popover-dark: 222 84% 4.9%;
+      --popover-foreground-dark: 210 40% 98%;
+      --primary-dark: var(--color-primary);
+      --primary-foreground-dark: var(--color-primary-foreground);
+      --secondary-dark: 217 33% 17%;
+      --secondary-foreground-dark: 210 40% 98%;
+      --muted-dark: 217 33% 17%;
+      --muted-foreground-dark: 215 20% 65%;
+      --accent-dark: 217 33% 17%;
+      --accent-foreground-dark: 210 40% 98%;
+      --destructive-dark: 0 63% 31%;
+      --destructive-foreground-dark: 210 40% 98%;
+      --border-dark: 217 33% 17%;
+      --input-dark: 217 33% 17%;
+      --ring-dark: var(--color-primary);
+    }
+    
+    .light {
+      --background: hsl(var(--background-light));
+      --foreground: hsl(var(--foreground-light));
+      --card: hsl(var(--card-light));
+      --card-foreground: hsl(var(--card-foreground-light));
+      --popover: hsl(var(--popover-light));
+      --popover-foreground: hsl(var(--popover-foreground-light));
+      --primary: var(--primary-light);
+      --primary-foreground: var(--primary-foreground-light);
+      --secondary: hsl(var(--secondary-light));
+      --secondary-foreground: hsl(var(--secondary-foreground-light));
+      --muted: hsl(var(--muted-light));
+      --muted-foreground: hsl(var(--muted-foreground-light));
+      --accent: hsl(var(--accent-light));
+      --accent-foreground: hsl(var(--accent-foreground-light));
+      --destructive: hsl(var(--destructive-light));
+      --destructive-foreground: hsl(var(--destructive-foreground-light));
+      --border: hsl(var(--border-light));
+      --input: hsl(var(--input-light));
+      --ring: var(--ring-light);
+    }
+
+    .dark {
+      --background: hsl(var(--background-dark));
+      --foreground: hsl(var(--foreground-dark));
+      --card: hsl(var(--card-dark));
+      --card-foreground: hsl(var(--card-foreground-dark));
+      --popover: hsl(var(--popover-dark));
+      --popover-foreground: hsl(var(--popover-foreground-dark));
+      --primary: var(--primary-dark);
+      --primary-foreground: var(--primary-foreground-dark);
+      --secondary: hsl(var(--secondary-dark));
+      --secondary-foreground: hsl(var(--secondary-foreground-dark));
+      --muted: hsl(var(--muted-dark));
+      --muted-foreground: hsl(var(--muted-foreground-dark));
+      --accent: hsl(var(--accent-dark));
+      --accent-foreground: hsl(var(--accent-foreground-dark));
+      --destructive: hsl(var(--destructive-dark));
+      --destructive-foreground: hsl(var(--destructive-foreground-dark));
+      --border: hsl(var(--border-dark));
+      --input: hsl(var(--input-dark));
+      --ring: var(--ring-dark);
+    }
+    
+    body {
+        background-color: var(--background);
+        color: var(--foreground);
+        transition: background-color 0.3s, color 0.3s;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+    
+    /* For custom scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--background); 
+    }
+    ::-webkit-scrollbar-thumb {
+      background: hsl(var(--muted-foreground) / 0.5);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: hsl(var(--accent-foreground) / 0.7);
+    }
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react/": "https://esm.sh/react@18.3.1/",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+    "react-dom": "https://esm.sh/react-dom@18.3.1",
+    "react-dom/": "https://esm.sh/react-dom@18.3.1/",
+    "@google/genai": "https://esm.sh/@google/genai@^0.14.0",
+    "framer-motion": "https://esm.sh/framer-motion@11.2.12",
+    "tailwind-merge": "https://esm.sh/tailwind-merge@^2.3.0",
+    "clsx": "https://esm.sh/clsx@^2.1.1",
+    "pdfjs-dist": "https://esm.sh/pdfjs-dist@4.4.168",
+    "mammoth": "https://esm.sh/mammoth@1.8.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="antialiased font-sans">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

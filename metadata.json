@@ -1,0 +1,6 @@
+{
+  "name": "GovConsult AI: Regulatory Compliance Checker",
+  "description": "An AI-powered platform that automates high-value government consulting tasks, including compliance analysis, what-if scenario modeling, and engagement management. Built to demonstrate the full potential of LLMs to revolutionize the GovTech industry.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
